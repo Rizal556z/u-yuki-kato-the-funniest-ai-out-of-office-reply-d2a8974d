@@ -15,6 +15,10 @@ REPLY = (
 
 
 def main() -> None:
+    # Gate: the entry must be UTF-8 text of 1-160 characters, not only
+    # whitespace. Fail loudly here rather than shipping an invalid entry.
+    if not 1 <= len(REPLY) <= 159 or not REPLY.strip():
+        raise SystemExit("REPLY must be 1-160 non-blank characters")
     out_dir = os.environ.get("MAKEFUN_OUTPUT_DIR") or "/output"
     os.makedirs(out_dir, exist_ok=True)
     path = os.path.join(out_dir, "entry.txt")
